@@ -1,0 +1,31 @@
+env:
+  browser: true
+  es2021: true
+  node: true
+extends:
+  - plugin:vue/vue3-essential
+  - airbnb-base
+parserOptions:
+  ecmaVersion: latest
+  parser: "@typescript-eslint/parser"
+  sourceType: module
+plugins:
+  - vue
+  - "@typescript-eslint"
+  - simple-import-sort
+
+rules:
+  indent: ["error", 4, { SwitchCase: 1 }]
+  no-console: 0
+  import/extensions: 0
+  simple-import-sort/imports: ["warn"]
+  import/no-unresolved: 0
+  max-classes-per-file: 0
+  no-underscore-dangle: 0
+  no-plusplus: 0
+  no-shadow: 0
+  "@typescript-eslint/no-unused-vars": 2
+  "@typescript-eslint/no-shadow": 2
+  max-len: ["warn", 200]
+  no-alert: 0
+  import/prefer-default-export: 0
