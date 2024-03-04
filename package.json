@@ -1,11 +1,11 @@
 {
   "name": "binsvbot",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "src/index.ts",
   "author": "agoudbg <agoudbg@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/agoudbg/binsvbot.git"
+    "url": "git+https://github.com/agoudbg/Bilibili-Video-Instant-View.git"
   },
   "homepage": "https://t.agou.im/TwVvIj",
   "license": "GPL-3.0",
