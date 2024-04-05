@@ -181,13 +181,36 @@ ${descStr}`;
                 responseType: 'arraybuffer',
             });
             const picBuffer = Buffer.from(picRes.data, 'binary');
-            const picCanvas = await canvas.loadImage(picBuffer);
+            let picCanvas: canvas.Image | canvas.Canvas = await canvas.loadImage(picBuffer);
 
             // get the information of template picture
             const template = fs.readFileSync(path.join(__dirname, '../img/template.png'));
             const templateCanvas = await canvas.loadImage(template);
             const templateWidth = templateCanvas.width;
             const templateHeight = templateCanvas.height;
+
+            // pic canvas may have different size
+            const picWidth = picCanvas.width;
+            const picHeight = picCanvas.height;
+            const picRatio = picWidth / picHeight;
+            const templateRatio = templateWidth / templateHeight;
+
+            // if so, cut the pic
+            if (picRatio > templateRatio) {
+                const newWidth = picHeight * templateRatio;
+                const cutWidth = (picWidth - newWidth) / 2;
+                const cutPicCanvas = canvas.createCanvas(newWidth, picHeight);
+                const cutCtx = cutPicCanvas.getContext('2d');
+                cutCtx.drawImage(picCanvas, -cutWidth, 0, picWidth, picHeight);
+                picCanvas = cutPicCanvas;
+            } else if (picRatio < templateRatio) {
+                const newHeight = picWidth / templateRatio;
+                const cutHeight = (picHeight - newHeight) / 2;
+                const cutPicCanvas = canvas.createCanvas(picWidth, newHeight);
+                const cutCtx = cutPicCanvas.getContext('2d');
+                cutCtx.drawImage(picCanvas, 0, -cutHeight, picWidth, picHeight);
+                picCanvas = cutPicCanvas;
+            }
 
             // create a new canvas
             const newCanvas = canvas.createCanvas(templateWidth, templateHeight);
