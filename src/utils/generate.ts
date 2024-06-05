@@ -148,19 +148,7 @@ ${pStr}
         // description
         let descStr = '';
         if (desc) {
-            // if desc > 8 lines / > 200 characters
-            let descCut = desc.length > 200 ? `${desc.slice(0, 200)}...` : desc;
-            if (descCut.split('\n').length > 5) {
-                descCut = `${descCut.split('\n').slice(0, 5).join('\n')}...`;
-            }
-
-            if (descCut !== desc && !advancedRequirements.includes('fullDescription')) {
-                descCut = `${xssStringify(descCut, 'HTML')}<a href="https://t.me/${bot.botInfo.username}?start=${bvid}_fullDescription">展开</a>`;
-            } else {
-                descCut = xssStringify(desc, 'HTML');
-            }
-
-            descStr = `<blockquote>${descCut}</blockquote>\n`;
+            descStr = `<blockquote expandable>${xssStringify(desc, 'HTML')}</blockquote>\n`;
         }
 
         content = `👤 ${staffStr}
