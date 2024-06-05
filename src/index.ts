@@ -9,6 +9,7 @@ import {
 } from '../package.json';
 import env from './utils/env';
 import { generate } from './utils/generate';
+import { log } from './utils/log';
 import { match } from './utils/match';
 
 // create /output directory if not exists
@@ -28,7 +29,7 @@ app.use((req, res, next) => {
 
 // start express server
 app.listen(env.serverPort, () => {
-    console.log(`Server started on http://localhost:${env.serverPort}`);
+    log('info', 'Server', 'Server started', { url: `http://localhost:${env.serverPort}` });
 });
 
 // redis
@@ -36,7 +37,7 @@ const redis = createClient({
     url: env.redis,
 });
 
-redis.on('error', (err: any) => console.log('Redis Client Error', err));
+redis.on('error', (err: any) => log('error', 'Redis', 'Redis error', { error: err }));
 
 redis.connect();
 

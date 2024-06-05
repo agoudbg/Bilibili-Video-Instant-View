@@ -9,6 +9,7 @@ import path from 'path';
 import bot, { redis } from '..';
 import dateTime from './dateTime';
 import env from './env';
+import { log } from './log';
 import parseDuration from './parseDuration';
 import parseNumber from './parseNumber';
 import xssStringify from './xssStringify';
@@ -81,11 +82,11 @@ export async function generate(type: 'aid' | 'bvid' | 'b23', id: string, advance
         }
     }
 
-    console.log(res);
+    log('info', 'generate', 'Get video info', { vid: aidP ? `av${aidP}` : `BV${bvidP}` });
 
     const { data } = res.data;
 
-    console.log(data);
+    log('debug', 'generate', 'Data', { data });
     const { View } = data;
     const {
         aid, bvid, videos, copyright, pic, title, pubdate, desc, duration, owner, staff, pages,
@@ -247,7 +248,7 @@ ${descStr}`;
             // save to file
             fs.writeFileSync(path.join(__dirname, `../../output/${picName}`), newCanvas.toBuffer('image/png'));
         } catch (e: any) {
-            console.error(e?.stack);
+            log('error', 'generate', 'Generate picture error', { error: e });
         }
     } else {
         infoPicture = `${env.publicUrl}/output/${res.savedPic}`;
