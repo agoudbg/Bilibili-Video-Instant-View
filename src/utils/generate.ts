@@ -135,7 +135,7 @@ export async function generate(type: 'aid' | 'bvid' | 'b23', id: string, advance
     if (advancedRequirements.includes('showPages')) {
         const pStr = pages.map((p: any) => `${p.page}. <a href="https://www.bilibili.com/video/${bvid}?p=${p.page}">${xssStringify(p.part, 'HTML')}</a> • ${parseDuration(p.duration)}`).join('\n');
         content = `
-${pStr}
+<blockquote expandable>${pStr}</blockquote>
 
 <a href="https://t.me/${bot.botInfo.username}?start=${bvid}">概要</a>`;
     } else {
