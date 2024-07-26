@@ -83,8 +83,16 @@ bot.on('message:text', async (ctx) => {
     if (ctx.message.via_bot?.id === ctx.me.id) return;
     if (ctx.message.forward_origin?.type === 'user' && ctx.message.forward_origin?.sender_user?.id === ctx.me.id) return;
     // check if message has bilibili link
-    const text = ctx.message.text ?? ctx.message.caption;
+    let text = ctx.message.text ?? ctx.message.caption;
     if (!text) return;
+
+    // remove bot commands
+    ctx.message.entities?.forEach((entity) => {
+        if (entity.type === 'bot_command') {
+            text = text.replace(ctx.message.text?.substring(entity.offset, entity.offset + entity.length), '');
+        }
+    })
+
     // find bilibili link
     const matched = match(text);
     if (!matched) return;
