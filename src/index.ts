@@ -100,7 +100,7 @@ bot.on('message:text', async (ctx) => {
         if (entity.type === 'bot_command') {
             text = text.replace(ctx.message.text?.substring(entity.offset, entity.offset + entity.length), '');
         }
-    })
+    });
 
     // find bilibili link
     const matched = match(text);
