@@ -43,7 +43,7 @@ redis.connect();
 
 const bot = new Bot(env.botToken);
 
-bot.command(['start', 'help', 'about', 'settings', 'privacy'], async (ctx) => {
+bot.command(['start', 'help', 'about', 'settings'], async (ctx) => {
     const params = ctx.message!.text?.split(' ')[1]?.split('_');
     if (!params || params.length < 1) {
         ctx.reply(`👋 你好。我可以为您生成 Bilibili 视频的基本信息。
@@ -77,6 +77,15 @@ bot.command(['start', 'help', 'about', 'settings', 'privacy'], async (ctx) => {
             },
         });
     }
+});
+
+bot.command('privacy', (ctx) => {
+    ctx.reply('此机器人直接与 Bilibili 服务器通信。此机器人不会存储任何与您关联的数据。', {
+        reply_parameters: {
+            message_id: ctx.message?.message_id ?? 0,
+            allow_sending_without_reply: true,
+        },
+    });
 });
 
 bot.on('message:text', async (ctx) => {
