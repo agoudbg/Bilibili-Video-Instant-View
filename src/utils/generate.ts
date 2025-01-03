@@ -17,7 +17,7 @@ import xssStringify from './xssStringify';
 canvas.GlobalFonts.registerFromPath(path.join(__dirname, '../fonts', 'MiSans-Medium.otf'), 'MiSans');
 canvas.GlobalFonts.registerFromPath(path.join(__dirname, '../fonts', 'AppleColorEmoji@2x.ttf'), 'AppleEmoji');
 
-export async function generate(type: 'aid' | 'bvid' | 'b23', id: string, advanced?: string) {
+export async function generate(type: 'aid' | 'bvid' | 'b23' | 'bili2233', id: string, advanced?: string) {
     const advancedRequirements = advanced ? advanced.split(',') : [];
     let isFromCache = false;
     let aidP;
@@ -28,7 +28,7 @@ export async function generate(type: 'aid' | 'bvid' | 'b23', id: string, advance
         aidP = id;
     } else if (type === 'bvid') {
         bvidP = id;
-    } else if (type === 'b23') {
+    } else if (type === 'b23' || type === 'bili2233') {
         // if is b23.tv
         // get real url
         const res = await axios.get(`https://b23.tv/${id}`);

@@ -1,6 +1,6 @@
 const matchRegs: {
     reg: RegExp,
-    type: 'aid' | 'bvid' | 'b23',
+    type: 'aid' | 'bvid' | 'b23' | 'bili2333',
 }[] = [{
     reg: /https:\/\/www.bilibili.com\/video\/av(\d+)/,
     type: 'aid',
@@ -14,6 +14,10 @@ const matchRegs: {
     type: 'b23',
 },
 {
+    reg: /https:\/\/bili2333.cn\/(\w+)/,
+    type: 'bili2333',
+},
+{
     reg: /av(\d+)/,
     type: 'aid',
 },
@@ -22,8 +26,8 @@ const matchRegs: {
     type: 'bvid',
 }];
 
-export function match(text: string): { type: 'aid' | 'bvid' | 'b23', id: string } | undefined {
-    let matched: { type: 'aid' | 'bvid' | 'b23', id: string } | undefined;
+export function match(text: string): { type: 'aid' | 'bvid' | 'b23' | 'bili2333', id: string } | undefined {
+    let matched: { type: 'aid' | 'bvid' | 'b23' | 'bili2333', id: string } | undefined;
     matchRegs.forEach(({ reg, type }) => {
         if (!matched) {
             const m = text.match(reg);
