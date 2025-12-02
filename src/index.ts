@@ -1,6 +1,6 @@
 import express from 'express';
 import fs from 'fs';
-import { Bot, InlineKeyboard } from 'grammy';
+import { Bot, BotError, InlineKeyboard } from 'grammy';
 import path from 'path';
 import { createClient } from 'redis';
 
@@ -148,6 +148,31 @@ bot.on('inline_query', async (ctx) => {
             },
         },
     }]);
+});
+
+// bot error handler
+bot.catch((err: BotError) => {
+    const { ctx } = err;
+    log('error', 'Bot', 'Error in bot handler', {
+        error: err.error,
+        update: ctx.update,
+    });
+
+    // try to send error message to user if possible
+    if (ctx.chat?.id) {
+        ctx.reply('❌ 处理请求时发生错误，请稍后再试。').catch(() => {
+            // ignore if we can't send the error message
+        });
+    }
+});
+
+// global error handlers
+process.on('uncaughtException', (error: Error) => {
+    log('error', 'Process', 'Uncaught Exception', { error });
+});
+
+process.on('unhandledRejection', (reason: unknown, promise: Promise<unknown>) => {
+    log('error', 'Process', 'Unhandled Rejection', { reason, promise });
 });
 
 bot.start({
