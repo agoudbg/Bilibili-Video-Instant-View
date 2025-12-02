@@ -1,6 +1,6 @@
 {
   "name": "binsvbot",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "main": "src/index.ts",
   "author": "agoudbg <agoudbg@gmail.com>",
   "repository": {
